@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: empdeploy
+  labels:
+    app: empdeploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: empdeploy
+  template:
+    metadata:
+      labels:
+        app: empdeploy
+    spec:
+      containers:
+      - name: empdeploy
+        image: sudhakarpangarakka/depmarch
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: empdeploy
+spec:
+ selector:
+  app: empdeploy
+ type: NodePort
+ ports:
+ - port: 8080
+   targetPort: 8080
